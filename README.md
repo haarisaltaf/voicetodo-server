@@ -34,6 +34,7 @@ idle by default; flip two config keys (`whisper_device: cuda`,
 unzip voicetodo-server.zip
 cd voicetodo-server
 sudo bash install.sh
+sudo ln -s /opt/voicetodo/.venv/bin/voicetodo /usr/local/bin/voicetodo # if wanting to add voicetodo cli to path
 ```
 
 The installer:
