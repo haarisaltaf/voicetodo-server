@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voicetodo"
+version = "0.1.0"
+description = "Voice-driven todo list daemon with local Whisper STT"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+dependencies = [
+    "faster-whisper>=1.0",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+    "python-multipart>=0.0.9",
+    "pydantic>=2",
+    "pyyaml>=6",
+]
+
+[project.scripts]
+voicetodo = "voicetodo.cli:main"
+
+[tool.setuptools]
+packages = ["voicetodo"]

@@ -1,0 +1,39 @@
+# /etc/voicetodo/config.yaml
+#
+# Anything not set here uses the defaults compiled into voicetodo.config.
+
+# --- Network ---
+host: 0.0.0.0
+port: 8765
+
+# --- Storage ---
+db_path:   /var/lib/voicetodo/voicetodo.db
+audio_dir: /var/lib/voicetodo/audio
+keep_audio: true            # archive uploaded audio for later replay
+
+# --- faster-whisper ---
+# Models: tiny.en / base.en / small.en   (English, smaller & faster)
+#         tiny    / base    / small      (multilingual)
+#
+# On an i7-7700k with int8 the throughput rule of thumb is:
+#   tiny.en  ~ 10x realtime
+#   base.en  ~ 5-7x realtime  <-- recommended starting point
+#   small.en ~ 2-3x realtime
+#
+# To switch to the 1080 Ti: device: cuda, compute_type: float16
+whisper_model: base.en
+whisper_device: cpu
+whisper_compute_type: int8
+
+# --- Auth ---
+# Clients send `Authorization: Bearer <api_key>`. Empty string disables auth.
+# You can also set this via the VOICETODO_API_KEY env var (e.g. through
+# /etc/voicetodo/voicetodo.env loaded by the systemd unit).
+api_key: ""
+
+# --- Optional: hand off todo extraction to a local LLM ---
+# When both are set, the server sends each transcript to Ollama and uses
+# its JSON-array reply. On any error it silently falls back to the
+# rule-based parser, so the server stays robust.
+# ollama_url:   http://localhost:11434
+# ollama_model: llama3.2:3b

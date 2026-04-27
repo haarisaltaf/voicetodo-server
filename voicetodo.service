@@ -1,0 +1,24 @@
+[Unit]
+Description=VoiceTodo daemon (local Whisper STT + todo API)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=voicetodo
+Group=voicetodo
+WorkingDirectory=/opt/voicetodo
+EnvironmentFile=-/etc/voicetodo/voicetodo.env
+ExecStart=/opt/voicetodo/.venv/bin/voicetodo -c /etc/voicetodo/config.yaml serve
+Restart=on-failure
+RestartSec=5
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/voicetodo
+
+[Install]
+WantedBy=multi-user.target
